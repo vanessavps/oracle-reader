@@ -1,3 +1,8 @@
 language: java
 dist: bionic
 jdk: openjdk11
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+env:
+  global:
+    - CODECOV_TOKEN=35398d6d-004d-4f91-b278-b35a40a3e6f0
