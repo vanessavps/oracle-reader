@@ -1,7 +1,7 @@
 package com.oraclereader.controller.user;
 
 import com.oraclereader.entity.user.User;
-import com.oraclereader.repository.UserRepository;
+import com.oraclereader.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,24 +11,24 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController
 {
-  private final UserRepository userRepository;
+  private final UserService userService;
 
   @Autowired
-  public UserController(UserRepository userRepository)
+  public UserController(UserService userService)
   {
-    this.userRepository = userRepository;
+    this.userService = userService;
   }
 
   @GetMapping
   public List<User> getAll()
   {
-    return userRepository.findAll();
+    return userService.findAll();
   }
 
   @PostMapping
   public User create(@RequestBody User user)
   {
-    return userRepository.save(user);
+    return userService.save(user);
   }
 
 }
