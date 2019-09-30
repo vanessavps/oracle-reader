@@ -1,5 +1,3 @@
 language: java
 dist: bionic
 jdk: openjdk11
-services:
-  - mysql
