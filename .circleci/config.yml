@@ -31,7 +31,7 @@ jobs:
       - image: buildpack-deps:trusty
     environment:
       HEROKU_APP_NAME: oracle-reader
-      HEROKU_API_KEY: f33a9e21-402a-460d-865a-9a0bd9edd5d0
+      HEROKU_API_KEY: cafafefb-6f49-41cc-b35b-e216db00ceab
     steps:
       - checkout
       - run:
