@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.5
 jobs:
   build:
     docker:
@@ -6,6 +8,7 @@ jobs:
     working_directory: ~/repo
     environment:
       MAVEN_OPTS: -Xmx3200m
+      CODECOV_TOKEN: 35398d6d-004d-4f91-b278-b35a40a3e6f0
     steps:
       - checkout
       - restore_cache:
@@ -17,4 +20,7 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn integration-test
+      - run: mvn test
+      - codecov:
+          conf: .codecov/.codecov.yml
+          token: ${CODECOV_TOKEN}
