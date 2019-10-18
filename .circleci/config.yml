@@ -22,6 +22,7 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
       - run: mvn test
       - codecov/upload:
+          file: test-result.xml
           conf: .codecov/.codecov.yml
           token: ${CODECOV_TOKEN}
   deploy:
