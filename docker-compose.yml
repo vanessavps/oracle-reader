@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  db:
+    image: mysql:5.7.15
+    ports:
+      - "8090:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: workyourlight
+    volumes:
+      - .docker-config:/docker-entrypoint-initdb.d
+      - D:\\Projects\\OracleReader\\db-data:/var/lib/mysql #Change Host Path to your machine
+
+volumes:
+  db-data:
