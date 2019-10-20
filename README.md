@@ -5,9 +5,12 @@
 
 System to log your oracle/tarot reading :crystal_ball:
 
-##Database
-###Schema
+## Database
+
+### Schema
+
 Oracle Reader is using MySQL and you can find the schema on .docker-config/oracle_reader_db.sql
 
-###Docker
+### Docker
+
 The docker-compose.yml file has the database set up ready to use.  
