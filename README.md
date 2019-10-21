@@ -5,6 +5,8 @@
 
 System to log your oracle/tarot reading :crystal_ball:
 
+You can check the API on Heroku https://oracle-reader.herokuapp.com/oraclereader/swagger-ui.html
+
 ## Database
 
 ### Schema
