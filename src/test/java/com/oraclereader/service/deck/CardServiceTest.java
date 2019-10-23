@@ -1,6 +1,7 @@
 package com.oraclereader.service.deck;
 
 import com.oraclereader.entity.deck.Card;
+import com.oraclereader.mock.deck.CardMock;
 import com.oraclereader.repository.deck.CardRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ public class CardServiceTest
   @Test
   public void saveTest()
   {
-    Card card = createCard(1, "The fool");
+    Card card = CardMock.createTheFool();
     cardService.save(card);
 
     verify(cardRepository, times(1)).save(card);
@@ -38,7 +39,7 @@ public class CardServiceTest
   @Test
   public void findByIdTest()
   {
-    Card card = createCard(2, "The magician");
+    Card card = CardMock.createTheMagician();
 
     when(cardRepository.findById(card.getId())).thenReturn(Optional.of(card));
     cardService.findById(card.getId());
@@ -49,9 +50,9 @@ public class CardServiceTest
   @Test
   public void findAllTest()
   {
-    Card card1 = createCard(1, "The fool");
-    Card card2 = createCard(2, "The magician");
-    Card card3 = createCard(3, "The high priestess");
+    Card card1 = CardMock.createTheFool();
+    Card card2 = CardMock.createTheMagician();
+    Card card3 = CardMock.createTheEmpress();
 
     List<Card> expectedResult = Arrays.asList(card1, card2, card3);
     when(cardRepository.findAll()).thenReturn(expectedResult);
@@ -65,18 +66,10 @@ public class CardServiceTest
   @Test
   public void deleteByIdTest()
   {
-    Card card = createCard(1, "The fool");
+    Card card = CardMock.createTheFool();
     cardService.deleteById(card.getId());
 
     verify(cardRepository, times(1)).deleteById(card.getId());
   }
 
-  private Card createCard(Integer id, String name)
-  {
-    Card card = new Card();
-    card.setId(id);
-    card.setName(name);
-
-    return card;
-  }
 }

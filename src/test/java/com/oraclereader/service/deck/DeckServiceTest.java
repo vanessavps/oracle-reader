@@ -1,7 +1,7 @@
 package com.oraclereader.service.deck;
 
-import com.oraclereader.entity.deck.Card;
 import com.oraclereader.entity.deck.Deck;
+import com.oraclereader.mock.deck.DeckMock;
 import com.oraclereader.repository.deck.DeckRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class DeckServiceTest
   @Test
   public void saveTest()
   {
-    Deck deck = createDeck(1, "Tarot", "Waite", "Colman", "Tarot Publisher");
+    Deck deck = DeckMock.createTarotDeck();
     deckService.save(deck);
 
     verify(deckRepository, times(1)).save(deck);
@@ -39,7 +39,7 @@ public class DeckServiceTest
   @Test
   public void findByIdTest()
   {
-    Deck deck = createDeck(2, "Tarot 2", "Waite", "Colman", "Tarot Publisher");
+    Deck deck = DeckMock.createTarotDeck();
 
     when(deckRepository.findById(deck.getId())).thenReturn(Optional.of(deck));
     deckService.findById(deck.getId());
@@ -50,11 +50,11 @@ public class DeckServiceTest
   @Test
   public void findAllTest()
   {
-    Deck deck1 = createDeck(1, "Tarot", "Waite", "Colman", "Tarot Publisher");
-    Deck deck2 = createDeck(2, "Tarot 2", "Waite 2", "Colman 2", "Card Publisher");
-    Deck deck3 = createDeck(3, "Tarot 3", "Waite 3", "Colman 3", "Tarot Publisher House");
+    Deck deck1 = DeckMock.createTarotDeck();
+    Deck deck2 = DeckMock.createMoonologyDeck();
 
-    List<Deck> expectedResult = Arrays.asList(deck1, deck2, deck3);
+
+    List<Deck> expectedResult = Arrays.asList(deck1, deck2);
     when(deckRepository.findAll()).thenReturn(expectedResult);
 
     List<Deck> result = deckService.findAll();
@@ -66,35 +66,9 @@ public class DeckServiceTest
   @Test
   public void deleteByIdTest()
   {
-    Deck deck = createDeck(3, "Tarot 3", "Waite 3", "Colman 3", "Tarot Publisher House");
+    Deck deck = DeckMock.createTarotDeck();
     deckService.deleteById(deck.getId());
 
     verify(deckRepository, times(1)).deleteById(deck.getId());
-  }
-
-  private Deck createDeck(Integer id, String name, String author, String illustrator, String publisher)
-  {
-    Deck deck = new Deck();
-    deck.setId(id);
-    deck.setName(name);
-    deck.setAuthor(author);
-    deck.setIllustrator(illustrator);
-    deck.setPublisher(publisher);
-
-    List<Card> cards = createCardList();
-    deck.setCards(cards);
-
-    return deck;
-  }
-
-  private List<Card> createCardList()
-  {
-    Card card1 = new Card();
-    card1.setName("fake card 1");
-
-    Card card2 = new Card();
-    card2.setName("fake card 2");
-
-    return Arrays.asList(card1, card2);
   }
 }

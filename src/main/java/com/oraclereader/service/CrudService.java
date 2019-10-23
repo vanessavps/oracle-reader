@@ -1,18 +1,40 @@
 package com.oraclereader.service;
 
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-/**
- * Interface for CRUD services
- * @param <T>
- */
-public interface CrudService<T>
+public abstract class CrudService<T> implements Crud<T>
 {
-  T save(T object);
+  final protected JpaRepository<T, Integer> repository;
 
-  T findById(Integer id);
+  @SuppressWarnings("unchecked")
+  public CrudService(JpaRepository repository)
+  {
+    this.repository = repository;
+  }
 
-  List<T> findAll();
+  @Override
+  public T save(T obj)
+  {
+    return repository.save(obj);
+  }
 
-  void deleteById(Integer id);
+  public T findById(Integer id)
+  {
+    return repository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(String.format("Object %s not found", id)));
+  }
+
+  public List<T> findAll()
+  {
+    return repository.findAll();
+  }
+
+  public void deleteById(Integer id)
+  {
+    repository.deleteById(id);
+  }
 }
