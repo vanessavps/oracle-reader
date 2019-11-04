@@ -2,9 +2,16 @@
 # Build stage
 #
 FROM maven:3.6.0-jdk-11-slim AS build
-COPY src /app/src
-COPY pom.xml /app
-RUN mvn -f /app/pom.xml  -DskipTests=true install -P dev
+
+WORKDIR /app
+
+COPY pom.xml .
+
+RUN mvn dependency:go-offline -B
+
+COPY src ./src
+
+RUN mvn package -DskipTests=true -P dev
 
 #
 # Package stage
