@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/oracle_reader
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: workyourlight
+    ports:
+    - "8080:8080"
+    depends_on:
+      - "db"
+    networks:
+      - backend
+
   db:
     image: mysql:5.7.15
     ports:
@@ -10,7 +25,11 @@ services:
       MYSQL_ROOT_PASSWORD: workyourlight
     volumes:
       - .docker-config:/docker-entrypoint-initdb.d
-      - D:\\Projects\\OracleReader\\db-data:/var/lib/mysql #Change Host Path to your machine
-
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
 volumes:
   db-data:
+
+networks:
+  backend:
