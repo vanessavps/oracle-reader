@@ -12,7 +12,6 @@ jobs:
 
     steps:
       - checkout
-          name: Checkout
       - restore_cache:
           name: Restoring cache dependencies
           keys:
