@@ -12,18 +12,25 @@ jobs:
 
     steps:
       - checkout
+          name: Checkout
       - restore_cache:
+          name: Restoring cache dependencies
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
       - run: mvn dependency:go-offline
+          name: Getting dependencies
       - save_cache:
+          name: Saving cache dependencies
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn test -DskipITs
+      - run: mvn install -DskipITs
+        name: Build
       - run: mvn failsafe:integration-test
+        name: IntegrationTest
       - codecov/upload:
+          name: Uploading Codecov
           conf: .codecov/.codecov.yml
           token: ${CODECOV_TOKEN}
   deploy:
