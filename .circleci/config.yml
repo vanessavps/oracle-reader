@@ -21,7 +21,8 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn test
+      - run: mvn test -DskipITs
+      - run: mvn failsafe:integration-test
       - codecov/upload:
           conf: .codecov/.codecov.yml
           token: ${CODECOV_TOKEN}
