@@ -17,17 +17,20 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
-      - run: mvn dependency:go-offline
+      - run:
           name: Getting dependencies
+          command: mvn dependency:go-offline
       - save_cache:
           name: Saving cache dependencies
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn install -DskipITs
+      - run:
         name: Build
-      - run: mvn failsafe:integration-test
+        command: mvn install -DskipITs
+      - run:
         name: IntegrationTest
+        command: mvn failsafe:integration-test
       - codecov/upload:
           name: Uploading Codecov
           conf: .codecov/.codecov.yml
