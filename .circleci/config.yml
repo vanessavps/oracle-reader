@@ -13,27 +13,28 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: Restoring cache
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
       - run:
-        name: Getting dependencies
-        command: 'mvn dependency:go-offline'
+          name: Getting dependencies
+          command: 'mvn dependency:go-offline'
       - save_cache:
-        name: Saving cache dependencies
-        paths:
-          - ~/.m2
-        key: v1-dependencies-{{ checksum "pom.xml" }}
+          name: Saving cache dependencies
+          paths:
+              - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
       - run:
-        name: Build
-        command: 'mvn install -DskipITs'
+          name: Build
+          command: 'mvn install -DskipITs'
       - run:
-        name: IntegrationTest
-        command: 'mvn failsafe:integration-test'
+          name: IntegrationTest
+          command: 'mvn failsafe:integration-test'
       - codecov/upload:
-        name: Uploading Codecov
-        conf: .codecov/.codecov.yml
-        token: ${CODECOV_TOKEN}
+          name: Uploading Codecov
+          conf: .codecov/.codecov.yml
+          token: ${CODECOV_TOKEN}
   deploy:
     docker:
       - image: buildpack-deps:trusty
