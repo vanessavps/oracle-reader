@@ -37,7 +37,8 @@ jobs:
 
       - run:
         name: IntegrationTest
-        command: mvn failsafe:integration-test
+        command: |
+          mvn failsafe:integration-test
 
       - codecov/upload:
           name: Uploading Codecov
