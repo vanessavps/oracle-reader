@@ -37,7 +37,7 @@ jobs:
       - store_artifacts:
           path: target/artifact
       - store_test_results:
-          path: target/site
+          path: target/surefire-reports
   deploy:
       docker:
           - image: buildpack-deps:trusty
