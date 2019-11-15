@@ -30,7 +30,7 @@ jobs:
           command: 'mvn clean install -DskipTests'
       - run:
           name: Test
-          command: 'mvn test'
+          command: 'mvn test -Dspring.profiles.active=test'
       - codecov/upload:
           conf: .codecov/.codecov.yml
           token: ${CODECOV_TOKEN}
