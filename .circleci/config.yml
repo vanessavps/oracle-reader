@@ -34,6 +34,8 @@ jobs:
       - codecov/upload:
           conf: .codecov/.codecov.yml
           token: ${CODECOV_TOKEN}
+      - store_artifacts:
+          path: target
   deploy:
       docker:
           - image: buildpack-deps:trusty
