@@ -21,29 +21,26 @@ jobs:
 
       - run:
         name: Getting dependencies
-        command: |
-          mvn dependency:go-offline
+        command: 'mvn dependency:go-offline'
 
       - save_cache:
         name: Saving cache dependencies
         paths:
-            - ~/.m2
+          - ~/.m2
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
       - run:
         name: Build
-        command: |
-           mvn install -DskipITs
+        command: 'mvn install -DskipITs'
 
       - run:
         name: IntegrationTest
-        command: |
-          mvn failsafe:integration-test
+        command: 'mvn failsafe:integration-test'
 
       - codecov/upload:
-          name: Uploading Codecov
-          conf: .codecov/.codecov.yml
-          token: ${CODECOV_TOKEN}
+        name: Uploading Codecov
+        conf: .codecov/.codecov.yml
+        token: ${CODECOV_TOKEN}
   deploy:
     docker:
       - image: buildpack-deps:trusty
