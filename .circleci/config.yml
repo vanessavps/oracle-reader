@@ -27,10 +27,10 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
       - run:
           name: Build
-          command: 'mvn install -DskipITs'
+          command: 'mvn clean install -DskipTests'
       - run:
-          name: IntegrationTest
-          command: 'mvn failsafe:integration-test'
+          name: Test
+          command: 'mvn test'
       - codecov/upload:
           conf: .codecov/.codecov.yml
           token: ${CODECOV_TOKEN}
