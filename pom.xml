@@ -109,9 +109,6 @@
             <configuration>
               <destFile>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</destFile>
               <propertyName>surefire.jacoco.args</propertyName>
-              <excludes>
-                <exclude>**/*IntegrationTest.java</exclude>
-              </excludes>
             </configuration>
           </execution>
           <execution>
