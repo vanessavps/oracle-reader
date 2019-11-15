@@ -197,7 +197,7 @@
         <configuration>
           <argLine>${failsafe.jacoco.args}</argLine>
           <includes>
-            <include>**/*IT.java</include>
+            <include>**/*IntegrationTest.java</include>
           </includes>
         </configuration>
         <executions>
