@@ -13,9 +13,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          - v1-dependencies-
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
       - run:
         name: Getting dependencies
         command: 'mvn dependency:go-offline'
