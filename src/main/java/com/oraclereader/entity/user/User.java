@@ -79,10 +79,10 @@ public class User
   public int hashCode()
   {
     return new HashCodeBuilder(1, 3)
-        .append(id)
-        .append(name)
-        .append(email)
-        .append(password)
+        .append(this.id)
+        .append(this.name)
+        .append(this.email)
+        .append(this.password)
         .toHashCode();
   }
 }

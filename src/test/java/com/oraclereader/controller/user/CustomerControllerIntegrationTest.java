@@ -3,9 +3,9 @@ package com.oraclereader.controller.user;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oraclereader.Application;
-import com.oraclereader.entity.user.User;
-import com.oraclereader.mock.user.UserMock;
-import com.oraclereader.repository.user.UserRepository;
+import com.oraclereader.entity.user.Customer;
+import com.oraclereader.mock.user.CustomerMock;
+import com.oraclereader.repository.user.CustomerRepository;
 import com.oraclereader.util.ObjectConverter;
 import org.junit.Before;
 import org.junit.Rule;
@@ -32,10 +32,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = Application.class)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class UserControllerIntegrationTest
+public class CustomerControllerIntegrationTest
 {
   @Autowired
-  private UserRepository userRepository;
+  private CustomerRepository customerRepository;
 
   @Autowired
   private MockMvc mvc;
@@ -46,75 +46,75 @@ public class UserControllerIntegrationTest
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  private User user1;
-  private User user2;
-  private User user3;
+  private Customer customer1;
+  private Customer customer2;
+  private Customer customer3;
 
   @Before
   public void setUp()
   {
-    user1 = UserMock.create(1, "Mario", "mario@gmail.com", "itsMeMario");
-    userRepository.save(user1);
+    customer1 = CustomerMock.create(1, "Mario", "mario@gmail.com", "itsMeMario");
+    customerRepository.save(customer1);
 
-    user2 = UserMock.create(2, "Luigi", "luigi@gmail.com", "luigisMansion");
-    userRepository.save(user2);
+    customer2 = CustomerMock.create(2, "Luigi", "luigi@gmail.com", "luigisMansion");
+    customerRepository.save(customer2);
 
-    user3 = UserMock.create(3, "Bowser", "bowser@hotmail.com", "yah!");
-    userRepository.save(user3);
+    customer3 = CustomerMock.create(3, "Bowser", "bowser@hotmail.com", "yah!");
+    customerRepository.save(customer3);
   }
 
   @Test
   public void createTest() throws Exception
   {
-    User user = UserMock.create(4, "Donkey Kong", "dk@gmail.com", "uhuu!");
-    String userJson = ObjectConverter.convertObjectToJson(mapper, user);
+    Customer customer = CustomerMock.create(4, "Donkey Kong", "dk@gmail.com", "uhuu!");
+    String customerJson = ObjectConverter.convertObjectToJson(mapper, customer);
 
-    mvc.perform(post("/user")
+    mvc.perform(post("/customer")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(userJson))
+        .content(customerJson))
         .andExpect(status().isOk());
 
-    User savedUser = userRepository.findById(4)
+    Customer savedCustomer = customerRepository.findById(4)
         .orElse(null);
-    assertNotNull(savedUser);
-    assertEquals(user, savedUser);
+    assertNotNull(savedCustomer);
+    assertEquals(customer, savedCustomer);
   }
 
   @Test
   public void findAllTest() throws Exception
   {
-    String result = mvc.perform(get("/user"))
+    String result = mvc.perform(get("/customer"))
         .andExpect(status().isOk())
         .andReturn()
         .getResponse()
         .getContentAsString();
 
-    List<User> users = ObjectConverter.convertJsonToObjectList(mapper, result, new TypeReference<List<User>>() {});
-    assertEquals(3, users.size());
+    List<Customer> customers = ObjectConverter.convertJsonToObjectList(mapper, result, new TypeReference<List<Customer>>() {});
+    assertEquals(3, customers.size());
   }
 
   @Test
   public void findByIdTest() throws Exception
   {
-    String result = mvc.perform(get("/user/{id}", 2))
+    String result = mvc.perform(get("/customer/{id}", 2))
         .andExpect(status().isOk())
         .andReturn()
         .getResponse()
         .getContentAsString();
 
-    User user = ObjectConverter.convertJsonToObject(mapper, result, User.class);
-    assertEquals(user2, user);
+    Customer customer = ObjectConverter.convertJsonToObject(mapper, result, Customer.class);
+    assertEquals(customer2, customer);
   }
 
   @Test
   public void findByIdInvalidIdTest() throws Exception
   {
     thrown.expect(EntityNotFoundException.class);
-    thrown.expectMessage("Object 15 not found");
+    thrown.expectMessage("Object 50 not found");
 
     try
     {
-      mvc.perform(get("/user/{id}", 15));
+      mvc.perform(get("/customer/{id}", 50));
     } catch (NestedServletException e)
     {
       throw (Exception) e.getCause();
@@ -126,11 +126,11 @@ public class UserControllerIntegrationTest
   {
     int id = 3;
 
-    mvc.perform(delete("/user/{id}", id))
+    mvc.perform(delete("/customer/{id}", id))
         .andExpect(status().isOk());
 
-    User user = userRepository.findById(id)
+    Customer customer = customerRepository.findById(id)
         .orElse(null);
-    assertNull(user);
+    assertNull(customer);
   }
 }
