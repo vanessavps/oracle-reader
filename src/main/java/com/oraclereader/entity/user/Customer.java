@@ -95,7 +95,7 @@ public class Customer
   @Override
   public int hashCode()
   {
-    return new HashCodeBuilder(1, 3)
+    return new HashCodeBuilder(7, 3)
         .append(this.id)
         .append(this.name)
         .append(this.email)

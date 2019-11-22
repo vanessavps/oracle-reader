@@ -1,5 +1,8 @@
 package com.oraclereader.entity.deck;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,5 +56,33 @@ public class Card
   public void setDetail(String detail)
   {
     this.detail = detail;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (obj == null || this.getClass() != obj.getClass())
+      return false;
+
+    if (this == obj)
+      return true;
+
+    Card card = (Card) obj;
+
+    return this.id.equals(card.getId()) &&
+        StringUtils.equals(this.name, card.getName()) &&
+        StringUtils.equals(this.description, card.getDescription()) &&
+        StringUtils.equals(this.detail, card.getDetail());
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return new HashCodeBuilder(3, 3)
+        .append(this.id)
+        .append(this.name)
+        .append(this.description)
+        .append(this.detail)
+        .toHashCode();
   }
 }
