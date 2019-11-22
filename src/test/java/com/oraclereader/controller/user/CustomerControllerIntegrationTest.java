@@ -53,20 +53,20 @@ public class CustomerControllerIntegrationTest
   @Before
   public void setUp()
   {
-    customer1 = CustomerMock.create(1, "Mario", "mario@gmail.com", "itsMeMario");
+    customer1 = CustomerMock.create(1, "Mario", "mario@gmail.com", "+55 2325 48547");
     customerRepository.save(customer1);
 
-    customer2 = CustomerMock.create(2, "Luigi", "luigi@gmail.com", "luigisMansion");
+    customer2 = CustomerMock.create(2, "Luigi", "luigi@gmail.com", "+64 016 5151 ");
     customerRepository.save(customer2);
 
-    customer3 = CustomerMock.create(3, "Bowser", "bowser@hotmail.com", "yah!");
+    customer3 = CustomerMock.create(3, "Bowser", "bowser@hotmail.com", "021 235 4647");
     customerRepository.save(customer3);
   }
 
   @Test
   public void createTest() throws Exception
   {
-    Customer customer = CustomerMock.create(4, "Donkey Kong", "dk@gmail.com", "uhuu!");
+    Customer customer = CustomerMock.create(4, "Donkey Kong", "dk@gmail.com", "+1 6554 0232");
     String customerJson = ObjectConverter.convertObjectToJson(mapper, customer);
 
     mvc.perform(post("/customer")
